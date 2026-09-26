@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raylee | Lemonade</title>
+<style>
+:root {
+  --black: #050505;
+  --ink: #0b0b0b;
+  --white: #f8f8f3;
+  --muted: #b9b9b2;
+  --yellow: #f5dd19;
+  --line: rgba(255,255,255,0.14);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--black);
+  color: var(--white);
+}
+a { color: inherit; text-decoration: none; }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 70% 15%, rgba(245,221,25,0.10), transparent 22%),
+    radial-gradient(circle at 20% 55%, rgba(255,255,255,0.05), transparent 28%);
+  z-index: -1;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32px 5vw;
+  animation: fadeDown 800ms ease both;
+}
+
+.logo {
+  font-size: 22px;
+  letter-spacing: 10px;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.lemon {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--yellow);
+  border-radius: 50%;
+  margin: 0 6px;
+  position: relative;
+  box-shadow: 0 0 18px rgba(245,221,25,0.28);
+}
+.lemon::before,
+.lemon::after,
+.lemon span {
+  content: "";
+  position: absolute;
+  background: var(--yellow);
+  left: 50%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  transform-origin: center;
+}
+.lemon::before { transform: translateX(-50%); }
+.lemon::after { transform: translateX(-50%) rotate(90deg); }
+.lemon span:first-child { transform: translateX(-50%) rotate(45deg); }
+.lemon span:last-child { transform: translateX(-50%) rotate(-45deg); }
+
+nav {
+  font-size: 13px;
+  letter-spacing: 2px;
+}
+nav a {
+  margin-left: 32px;
+  color: var(--white);
+  transition: color 250ms ease;
+}
+nav a:hover { color: var(--yellow); }
+
+.hero {
+  min-height: 620px;
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  gap: 60px;
+  align-items: center;
+  padding: 70px 5vw 90px;
+}
+
+.hero-copy {
+  animation: fadeUp 900ms ease 150ms both;
+}
+.hero h1 {
+  font-size: clamp(48px, 6vw, 82px);
+  line-height: 1.02;
+  margin: 0 0 26px;
+  letter-spacing: -2px;
+}
+.hero h1 span { color: var(--yellow); }
+.hero p {
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.hero-visual {
+  position: relative;
+  animation: fadeUp 1000ms ease 250ms both;
+}
+.hero-visual img {
+  width: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  filter: grayscale(18%) contrast(1.05);
+  border: 1px solid var(--line);
+}
+.hero-visual::after {
+  content: "REAL SUPPORT. REAL PEOPLE. REAL IMPACT.";
+  position: absolute;
+  left: -35px;
+  bottom: 34px;
+  max-width: 230px;
+  padding: 18px;
+  background: rgba(0,0,0,0.72);
+  border-left: 3px solid var(--yellow);
+  font-size: 13px;
+  letter-spacing: 2px;
+  line-height: 1.6;
+}
+
+.button {
+  display: inline-block;
+  margin-top: 22px;
+  padding: 14px 22px;
+  border: 1px solid var(--yellow);
+  color: var(--yellow);
+  font-size: 13px;
+  letter-spacing: 2px;
+  transition: all 250ms ease;
+}
+.button:hover {
+  background: var(--yellow);
+  color: var(--black);
+  transform: translateY(-2px);
+}
+
+.panel-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.panel {
+  padding: 42px 5vw 42px 34px;
+  min-height: 250px;
+  border-right: 1px solid var(--line);
+  background: rgba(255,255,255,0.018);
+}
+.panel:last-child { border-right: none; }
+.panel h2 {
+  font-size: 15px;
+  letter-spacing: 3px;
+  color: var(--white);
+  margin: 0 0 22px;
+}
+.panel p, .panel li {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.75;
+}
+.panel ul { padding-left: 0; list-style: none; }
+.panel li {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0;
+}
+.panel li a { display: flex; justify-content: space-between; }
+.panel li a:hover { color: var(--yellow); }
+
+.artist-hero {
+  display: grid;
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 60px;
+  padding: 60px 5vw 80px;
+  align-items: center;
+}
+.artist-hero img {
+  width: 100%;
+  max-height: 560px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  animation: slowFloat 5s ease-in-out infinite;
+}
+.eyebrow {
+  color: var(--yellow);
+  letter-spacing: 3px;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+.artist-hero h1 {
+  font-size: clamp(48px, 6vw, 78px);
+  line-height: 1;
+  margin: 0 0 22px;
+}
+.artist-hero p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.8;
+}
+.instagram {
+  color: var(--yellow);
+  letter-spacing: 1px;
+  margin-top: 16px;
+}
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 34px;
+  padding: 0 5vw 80px;
+}
+.card {
+  border: 1px solid var(--line);
+  background: rgba(255,255,255,0.025);
+  padding: 32px;
+}
+.card h2 {
+  font-size: 16px;
+  letter-spacing: 3px;
+  margin-top: 0;
+}
+.card p {
+  color: var(--muted);
+  line-height: 1.8;
+}
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+.gallery img {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  transition: transform 250ms ease, opacity 250ms ease;
+}
+.gallery img:hover {
+  transform: translateY(-4px);
+  opacity: 0.88;
+}
+
+footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 28px 5vw;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slowFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@media (max-width: 900px) {
+  header { align-items: flex-start; flex-direction: column; gap: 22px; }
+  nav a { margin-left: 0; margin-right: 20px; display: inline-block; margin-bottom: 10px; }
+  .hero, .artist-hero, .content-grid { grid-template-columns: 1fr; }
+  .panel-row { grid-template-columns: 1fr; }
+  .panel { border-right: none; border-bottom: 1px solid var(--line); }
+  .hero-visual::after { left: 20px; }
+  footer { flex-direction: column; gap: 10px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html" aria-label="Lemonade home">
+    L E M <div class="lemon"><span></span><span></span></div> N A D E
+  </a>
+  <nav>
+    <a href="index.html#about">ABOUT</a>
+    <a href="index.html#artists">ARTISTS</a>
+    <a href="index.html#ethics">ETHICS</a>
+    <a href="index.html#contact">CONTACT</a>
+  </nav>
+</header>
+
+
+<section class="artist-hero">
+  <img src="assets/raylee-portrait.jpg" alt="Raylee">
+  <div>
+    <div class="eyebrow">ARTIST PROFILE · NORWAY</div>
+    <h1>Raylee</h1>
+    <p>Raylee, born Lotta Kristiansen on June 28, 1997 in Arendal, Norway, is a prominent pop singer, dancer and songwriter known for her performances in Melodi Grand Prix and the TV show Stjernekamp. Starting her career at age ten, she has released multiple singles and performed with international artists.</p>
+    <div class="instagram">Instagram: @rayleeofficial</div>
+    <a class="button" href="https://www.instagram.com/rayleeofficial/">VIEW INSTAGRAM</a>
+  </div>
+</section>
+
+<section class="content-grid">
+  <div class="card">
+    <h2>WHY LEMONADE</h2>
+    <p>Lemonade’s role is to support artists like Raylee through flexible release conversations, clear strategy and relationships that protect creative independence while building momentum.</p>
+    <p>Lemonade works through relationship-led partnerships that prioritise trust, communication and sustainability over short-term pressure.</p>
+  </div>
+  <div class="card">
+    <h2>ARTIST IMAGES</h2>
+    <div class="gallery">
+      <img src="assets/raylee-portrait.jpg" alt="Raylee portrait">
+      <img src="assets/raylee-live.jpg" alt="Raylee image">
+    </div>
+    <a class="button" href="index.html#artists">BACK TO ARTISTS</a>
+  </div>
+</section>
+
+
+<footer>
+  <div>© Lemonade</div>
+  <div><a href="mailto:emma.gale@lemonademusic.com">emma.gale@lemonademusic.com</a></div>
+</footer>
+
+</body>
+</html>
